@@ -27,6 +27,12 @@
                 <Separator HBox.hgrow="ALWAYS"/>
             </HBox>
             <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Chrome Driver:" minWidth="85"/>
+                <TextField fx:id="chromeDriverField" HBox.hgrow="ALWAYS"/>
+                <Button fx:id="browsechromeDriver" text="Browse..."
+                        onAction="#onBrowsechromeDriver"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="Chrome Profile:" minWidth="85"/>
                 <ComboBox fx:id="profileComboBox" HBox.hgrow="ALWAYS">
                 </ComboBox>

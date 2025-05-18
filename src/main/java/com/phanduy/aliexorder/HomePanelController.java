@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,8 +19,10 @@ import java.util.prefs.Preferences;
 
 public class HomePanelController {
     @FXML private Button startButton;
+    @FXML private Button browsechromeDriver;
     @FXML private TextField ggSheetLinkField;
     @FXML private TextField sheetNameField;
+    @FXML private TextField chromeDriverField;
 
     @FXML private ComboBox<String> profileComboBox;
 
@@ -70,46 +74,70 @@ public class HomePanelController {
 
         @FXML
     private void onOpenChromeProfile() {
-        String profile = profileMap.get(profileComboBox.getValue());
-        try {
-            AliexScraper.getInstance().initDriver(profile);
-        } catch (Exception e) {
-            System.out.println("Exception: " + e.getMessage());
-            AlertUtil.showError("", e.getMessage());
-            return;
+        checkDriver();
+    }
+
+    @FXML
+    private void onBrowsechromeDriver() {
+        String currentPath = chromeDriverField.getText();
+        String folderPath = null;
+        if (currentPath.isEmpty()) {
+            folderPath = ".";
+        } else {
+            folderPath = currentPath.substring(0, currentPath.lastIndexOf("\\"));
+        }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(folderPath));
+
+        // Set the title for the FileChooser dialog
+        fileChooser.setTitle("Select File");
+
+        // Restrict the selection to Excel files
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Chrome Driver", "*.exe")
+        );
+
+        // Show the dialog and get the selected file
+        Stage stage = (Stage) browsechromeDriver.getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        // Process the selected file
+        if (selectedFile != null) {
+            chromeDriverField.setText(selectedFile.getAbsolutePath());
+            prefs.put("chromeDriverField", selectedFile.getAbsolutePath());
         }
     }
 
     @FXML
     private void onOpenLinkGGSheet() {
-        if (checkDriver()) {
+        if (AliexScraper.getInstance().isReady()) {
             AliexScraper.getInstance().goToPage(ggSheetLinkField.getText());
         }
     }
 
     private void saveSettings() {
-        prefs.put("ggSheetLink", ggSheetLinkField.getText());
-        prefs.put("sheetName", sheetNameField.getText());
+        prefs.put("ggSheetLinkField", ggSheetLinkField.getText());
+        prefs.put("sheetNameField", sheetNameField.getText());
+        prefs.put("chromeDriverField", chromeDriverField.getText());
         System.out.println("Settings Saved!");
     }
 
     private void loadSettings() {
-        ggSheetLinkField.setText(prefs.get("ggSheetLink", ""));
-        sheetNameField.setText(prefs.get("sheetName", ""));
+        ggSheetLinkField.setText(prefs.get("ggSheetLinkField", ""));
+        sheetNameField.setText(prefs.get("sheetNameField", ""));
+        chromeDriverField.setText(prefs.get("chromeDriverField", ""));
     }
 
-    private boolean checkDriver() {
+    private void checkDriver() {
         if (!AliexScraper.getInstance().isReady()) {
             String profile = profileMap.get(profileComboBox.getValue());
             try {
-                return AliexScraper.getInstance().initDriver(profile);
+                OpenProfileThread openProfileThread = new OpenProfileThread(profile, prefs.get("chromeDriverField", ""));
+                openProfileThread.start();
             } catch (Exception e) {
                 System.out.println("Exception: " + e.getMessage());
                 AlertUtil.showError("", e.getMessage());
-                return false;
             }
-        } else {
-            return true;
         }
     }
 

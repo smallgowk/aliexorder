@@ -45,7 +45,7 @@ public class CrawlerMachine {
         options.addArguments("disable-infobars");
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         options.addArguments("disable-javascript");
-        options.addArguments("--disable-gpu");
+//        options.addArguments("--disable-gpu");
         options.setCapability(CapabilityType.HAS_NATIVE_EVENTS, false);
 //        options.addArguments("--headless");
 
