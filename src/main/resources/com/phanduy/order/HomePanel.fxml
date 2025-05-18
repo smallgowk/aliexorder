@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.phanduy.aliexorder.HomePanelController"
+            prefWidth="500.0" prefHeight="400.0">
+
+    <children>
+        <VBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10"
+              AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+
+            <!-- Input Settings -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Input" style="-fx-font-weight: bold;"/>
+                <Separator HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Chrome Profile:" minWidth="85"/>
+                <ComboBox fx:id="profileComboBox" HBox.hgrow="ALWAYS">
+                </ComboBox>
+                <Button text="Open Chrome"
+                        onAction="#onOpenChromeProfile"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Link Sheet:" minWidth="85"/>
+                <TextField fx:id="ggSheetLinkField" HBox.hgrow="ALWAYS"/>
+                <Button text="Open"
+                        onAction="#onOpenLinkGGSheet"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Sheet name:" minWidth="85"/>
+                <TextField fx:id="sheetNameField" HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <Separator>
+                <VBox.margin>
+                    <Insets top="10"/>
+                </VBox.margin>
+            </Separator>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="startButton" text="Start"
+                        onAction="#onStartClick"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label fx:id="processingLabel" text="Processing..." visible="false" style="-fx-text-fill: blue;"/>
+            </HBox>
+        </VBox>
+
+
+
+<!--        <Separator  AnchorPane.bottomAnchor="45" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10"/>-->
+
+        <!-- Buttons -->
+<!--        <HBox spacing="10" AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10">-->
+<!--            <Button fx:id="btnOk" text="OK" onAction="#onOk"/>-->
+<!--            <Button fx:id="btnCancel" text="Cancel" onAction="#onCancel"/>-->
+<!--            <Button fx:id="btnApply" text="Apply" onAction="#onApply"/>-->
+<!--        </HBox>-->
+    </children>
+</AnchorPane>
+
