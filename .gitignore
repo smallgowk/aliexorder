@@ -63,3 +63,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Ignore all JSON files (credentials, service account, etc.)
+*.json

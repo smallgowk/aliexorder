@@ -13,8 +13,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.prefs.Preferences;
 
 public class HomePanelController {
@@ -145,11 +149,26 @@ public class HomePanelController {
     private void onStartClick() {
         saveSettings();
 
-        checkDriver();
+//        checkDriver();
 
         if (true) {
 //            AliexScraper.getInstance().initDriver();
 //            AliexScraper.getInstance().crawlProduct("3256806026959280");
+            try {
+                List<Map<String, String>> result =  GoogleSheetReader.readOrderAndTracking("1WO5qzShS8ue1chF9azXCzrCqw1WJwc-qm_cJ5WYRRJs", "Tiktok Shop");
+                System.out.println(result);
+
+                GoogleSheetReader.updateTrackingByOrderId(
+                        "1WO5qzShS8ue1chF9azXCzrCqw1WJwc-qm_cJ5WYRRJs",
+                        "Tiktok Shop",
+                        "123456",
+                        "haha"
+                );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (GeneralSecurityException e) {
+                throw new RuntimeException(e);
+            }
             return;
         }
         processingLabel.setVisible(true);

@@ -20,9 +20,11 @@ public class OpenProfileThread extends Thread {
     @Override
     public void run() {
         try {
+            System.out.println("Duyuno driverPath: " + driverPath);
             System.setProperty("webdriver.chrome.driver", driverPath);
             AliexScraper.getInstance().initDriver(profileName);
         } catch (Exception ex) {
+            System.out.println("Duyuno Exception: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

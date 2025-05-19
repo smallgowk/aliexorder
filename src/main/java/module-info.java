@@ -37,6 +37,11 @@ module com.phanduy.aliexorder.aliexscrapper {
     requires selenium.support;
     requires com.google.gson;
     requires java.sql;
+    requires commons.logging;
+    requires com.google.api.client;
+    requires com.google.api.client.json.jackson2;
+    requires google.api.client;
+    requires com.google.api.services.sheets;
 
 
     // Cho phép các package bên ngoài dùng FXML controller của bạn (nếu có)

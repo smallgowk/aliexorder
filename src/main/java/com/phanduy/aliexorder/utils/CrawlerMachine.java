@@ -1,5 +1,6 @@
 package com.phanduy.aliexorder.utils;
 
+import org.apache.commons.logging.impl.Jdk14Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.JavascriptExecutor;
@@ -35,19 +36,20 @@ public class CrawlerMachine {
             return true;
         }
         ChromeOptions options = new ChromeOptions();
-//        String customProfilePath = System.getProperty("user.home") + "/selenium-profile";
+        String seleniumProfilePath = System.getProperty("user.home") + "/selenium-profile";
+        options.addArguments("--user-data-dir=" + seleniumProfilePath);
         if (profileName != null) {
-            String userDir = System.getProperty("user.home") + "/AppData/Local/Google/Chrome/User Data/";
-            options.addArguments("--user-data-dir=" + userDir);
             options.addArguments("--profile-directory=" + profileName);
+        } else {
+            options.addArguments("--profile-directory=Default");
         }
         options.addArguments("--start-maximized");
         options.addArguments("disable-infobars");
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        options.addArguments("disable-javascript");
-//        options.addArguments("--disable-gpu");
-        options.setCapability(CapabilityType.HAS_NATIVE_EVENTS, false);
-//        options.addArguments("--headless");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--remote-debugging-port=0");
 
         try {
             driver = new ChromeDriver(options);
@@ -56,7 +58,8 @@ public class CrawlerMachine {
 
             return true;
         } catch (Exception ex) {
-            return false;
+            System.out.println("11 " + ex.getMessage());
+            throw ex;
         }
 
     }
